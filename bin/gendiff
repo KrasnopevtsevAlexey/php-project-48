@@ -3,6 +3,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use function Hexlet\Code\parseFile;
 
 $doc = <<<'DOCOPT'
 Generate diff
@@ -10,6 +11,7 @@ Generate diff
 Usage:
   gendiff (-h|--help)
   gendiff (-v|--version)
+  gendiff [--format <fmt>] <firstFile> <secondFile>
 
 Options:
   -h --help                     Show this screen
@@ -20,3 +22,23 @@ DOCOPT;
 $result = Docopt::handle($doc, array('version' => '1.0.0'));
 
 
+$firstFile = $result['<firstFile>'];
+$secondFile = $result['<secondFile>'];
+
+echo "Reading file: {$firstFile}\n";
+echo "Reading file: {$secondFile}\n\n";
+
+try {
+    $data1 = parseFile($firstFile);
+    $data2 = parseFile($secondFile);
+    
+    echo "File 1 content:\n";
+    print_r($data1);
+    
+    echo "\nFile 2 content:\n";
+    print_r($data2);
+    
+} catch (\Exception $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+    exit(1);
+}
