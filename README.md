@@ -13,3 +13,7 @@
 ## Демонстрация работы (YAML)
 
 [![asciicast](https://asciinema.org)](https://asciinema.org/a/1051347)
+
+## Демонстрация работы (Format: Plain)
+
+[![asciicast](https://asciinema.org)](https://asciinema.org/a/1051780)

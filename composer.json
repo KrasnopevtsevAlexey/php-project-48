@@ -7,7 +7,9 @@
 	"files": [
 	    "src/Parser.php",
         "src/Differ.php",
-        "src/Formatters/Stylish.php"
+        "src/Formatters/Stylish.php",
+        "src/Formatters/Plain.php",
+        "src/Formatters.php"
 	],
         "psr-4": {
             "Hexlet\\Code\\": "src/"

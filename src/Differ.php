@@ -3,7 +3,7 @@
 namespace Hexlet\Code\Differ;
 
 use function Hexlet\Code\Parser\parseFile;
-use function Hexlet\Code\Formatters\Stylish\render;
+use function Hexlet\Code\Formatters\format;
 
 function buildAst(array $data1, array $data2): array
 {
@@ -40,18 +40,13 @@ function buildAst(array $data1, array $data2): array
     }, $sortedKeys);
 }
 
-
 function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
 {
-
     $data1 = json_decode(json_encode(parseFile($pathToFile1)), true);
     $data2 = json_decode(json_encode(parseFile($pathToFile2)), true);
 
     $ast = buildAst($data1, $data2);
 
-    if ($format === 'stylish') {
-        return render($ast);
-    }
-
-    throw new \Exception("Unknown format: {$format}");
+    // Используем центральную фабрику форматеров
+    return format($ast, $format);
 }

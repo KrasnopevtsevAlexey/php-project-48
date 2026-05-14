@@ -35,4 +35,25 @@ class DifferTest extends TestCase
 
         $this->assertEquals($expected, $actual);
     }
+    public function testGenDiffPlainJson(): void
+    {
+        $file1 = $this->fixturesPath . 'file1.json';
+        $file2 = $this->fixturesPath . 'file2.json';
+        
+        $expected = trim(file_get_contents($this->fixturesPath . 'expected_plain.txt'));
+        $actual = trim(genDiff($file1, $file2, 'plain'));
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testGenDiffPlainYaml(): void
+    {
+        $file1 = $this->fixturesPath . 'file1.yaml';
+        $file2 = $this->fixturesPath . 'file2.yaml';
+        
+        $expected = trim(file_get_contents($this->fixturesPath . 'expected_plain.txt'));
+        $actual = trim(genDiff($file1, $file2, 'plain'));
+
+        $this->assertEquals($expected, $actual);
+    }
 }
