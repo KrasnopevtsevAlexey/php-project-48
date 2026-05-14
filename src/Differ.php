@@ -43,7 +43,7 @@ function buildAst(array $data1, array $data2): array
 
 function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
 {
-    
+
     $data1 = json_decode(json_encode(parseFile($pathToFile1)), true);
     $data2 = json_decode(json_encode(parseFile($pathToFile2)), true);
 
