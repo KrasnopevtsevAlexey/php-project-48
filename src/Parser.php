@@ -31,7 +31,7 @@ function parseFile(string $filepath): \stdClass
 
     $content = file_get_contents($filepath);
 
-    
+
 
     if ($content === false) {
         throw new \Exception("Cannot read file: {$filepath}");
