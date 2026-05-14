@@ -8,12 +8,6 @@
 
 ## Демонстрация работы
 
-[![asciicast](https://asciinema.org)](https://asciinema.org/a/1051000)
+В утилите реализовано три формата вывода: `stylish` (по умолчанию), `plain` и `json`. Вы можете увидеть пример работы каждого формата на видео ниже:
 
-## Демонстрация работы (YAML)
-
-[![asciicast](https://asciinema.org)](https://asciinema.org/a/1051347)
-
-## Демонстрация работы (Format: Plain)
-
-[![asciicast](https://asciinema.org)](https://asciinema.org/a/1051780)
+[![asciicast](https://asciinema.org)](https://asciinema.org/a/1054454)

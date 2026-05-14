@@ -56,4 +56,20 @@ class DifferTest extends TestCase
 
         $this->assertEquals($expected, $actual);
     }
+
+        public function testGenDiffJsonFormat(): void
+    {
+        $file1 = $this->fixturesPath . 'file1.json';
+        $file2 = $this->fixturesPath . 'file2.json';
+        
+        $actual = genDiff($file1, $file2, 'json');
+
+        
+        $this->assertJson($actual);
+        
+        
+        $this->assertStringContainsString('"type": "nested"', $actual);
+        $this->assertStringContainsString('"type": "changed"', $actual);
+    }
+
 }
