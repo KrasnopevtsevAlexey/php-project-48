@@ -18,8 +18,10 @@ class DifferTest extends TestCase
     {
         $file1 = $this->fixturesPath . 'file1.json';
         $file2 = $this->fixturesPath . 'file2.json';
-        $expected = file_get_contents($this->fixturesPath . 'expected_flat.txt');
+        
+        $expected = trim(file_get_contents($this->fixturesPath . 'expected_flat.txt'));
+        $actual = trim(genDiff($file1, $file2));
 
-        $this->assertEquals($expected, genDiff($file1, $file2));
+        $this->assertEquals($expected, $actual);
     }
 }
