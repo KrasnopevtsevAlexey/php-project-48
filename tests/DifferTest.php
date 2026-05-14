@@ -14,10 +14,10 @@ class DifferTest extends TestCase
         $this->fixturesPath = __DIR__ . '/fixtures/';
     }
 
-    public function testGenDiffFlatJson(): void
+    public function testGenDiffMixedFormat(): void
     {
         $file1 = $this->fixturesPath . 'file1.json';
-        $file2 = $this->fixturesPath . 'file2.json';
+        $file2 = $this->fixturesPath . 'file2.yml';
         
         $expected = trim(file_get_contents($this->fixturesPath . 'expected_flat.txt'));
         $actual = trim(genDiff($file1, $file2));

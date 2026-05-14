@@ -9,3 +9,7 @@
 ## Демонстрация работы
 
 [![asciicast](https://asciinema.org)](https://asciinema.org/a/1051000)
+
+## Демонстрация работы (YAML)
+
+[![asciicast](https://asciinema.org)](https://asciinema.org/a/1051347)
