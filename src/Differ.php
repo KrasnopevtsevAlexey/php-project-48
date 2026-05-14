@@ -4,7 +4,7 @@ namespace Hexlet\Code\Differ;
 
 use function Hexlet\Code\parseFile;
 
-function genDiff(string $pathToFile1, string $pathToFile2): string 
+function genDiff(string $pathToFile1, string $pathToFile2): string
 {
     $data1 = (array) parseFile($pathToFile1);
     $data2 = (array) parseFile($pathToFile2);
@@ -31,7 +31,7 @@ function genDiff(string $pathToFile1, string $pathToFile2): string
             return "    {$key}: " . stringify($data1[$key]);
         }
 
-        return "  - {$key}: " . stringify($data1[$key]) . "\n" . 
+        return "  - {$key}: " . stringify($data1[$key]) . "\n" .
                "  + {$key}: " . stringify($data2[$key]);
     }, $sortKeys);
 
