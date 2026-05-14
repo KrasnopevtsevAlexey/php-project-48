@@ -5,9 +5,6 @@ namespace Hexlet\Code\Differ;
 use function Hexlet\Code\Parser\parseFile;
 use function Hexlet\Code\Formatters\Stylish\render;
 
-/**
- * Строит промежуточное дерево различий (AST).
- */
 function buildAst(array $data1, array $data2): array
 {
     $allKeys = array_keys(array_merge($data1, $data2));
@@ -43,12 +40,10 @@ function buildAst(array $data1, array $data2): array
     }, $sortedKeys);
 }
 
-/**
- * Генерирует дифф между двумя файлами.
- */
+
 function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
 {
-    // Приводим stdClass к ассоциативным массивам рекурсивно
+    
     $data1 = json_decode(json_encode(parseFile($pathToFile1)), true);
     $data2 = json_decode(json_encode(parseFile($pathToFile2)), true);
 

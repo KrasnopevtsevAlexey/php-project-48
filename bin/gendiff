@@ -23,16 +23,16 @@ DOCOPT;
 $result = Docopt::handle($doc, ['version' => '1.0.0']);
 
 
-$firstFile = (string)$result['<firstFile>'];
-$secondFile = (string)$result['<secondFile>'];
-$format = (string)$result['--format'];
+$firstFile = (string) $result['<firstFile>'];
+$secondFile = (string) $result['<secondFile>'];
+$format = (string) $result['--format'];
 try {
-   $diff = genDiff($firstFile, $secondFile, $format);
-    
-    echo "{$diff}\n";
-    
-    
+  $diff = genDiff($firstFile, $secondFile, $format);
+
+  echo "{$diff}\n";
+
+
 } catch (\Exception $e) {
-    echo "Error: " . $e->getMessage() . "\n";
-    exit(1);
+  echo "Error: " . $e->getMessage() . "\n";
+  exit(1);
 }
