@@ -3,7 +3,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use function Hexlet\Code\parseFile;
+
 use function Hexlet\Code\Differ\genDiff;
 
 $doc = <<<'DOCOPT'
@@ -20,17 +20,16 @@ Options:
   --format <fmt>                Report format [default: stylish]
 DOCOPT;
 
-$result = Docopt::handle($doc, array('version' => '1.0.0'));
+$result = Docopt::handle($doc, ['version' => '1.0.0']);
 
 
-$firstFile = $result['<firstFile>'];
-$secondFile = $result['<secondFile>'];
-
-
+$firstFile = (string)$result['<firstFile>'];
+$secondFile = (string)$result['<secondFile>'];
+$format = (string)$result['--format'];
 try {
-   $diff = genDiff($firstFile, $secondFile);
+   $diff = genDiff($firstFile, $secondFile, $format);
     
-    echo $diff . "\n";
+    echo "{$diff}\n";
     
     
 } catch (\Exception $e) {
