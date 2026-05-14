@@ -5,7 +5,8 @@
     "license": "MIT",
     "autoload": {
 	"files": [
-	    "src/Parser.php"
+	    "src/Parser.php",
+        "src/Differ.php"
 	],
         "psr-4": {
             "Hexlet\\Code\\": "src/"
@@ -18,7 +19,8 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "docopt/docopt": "^1.0"
+        "docopt/docopt": "^1.0",
+        "funct/funct": "^1.6"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^4.0"
