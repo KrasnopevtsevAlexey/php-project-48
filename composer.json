@@ -6,7 +6,8 @@
     "autoload": {
 	"files": [
 	    "src/Parser.php",
-        "src/Differ.php"
+        "src/Differ.php",
+        "src/Formatters/Stylish.php"
 	],
         "psr-4": {
             "Hexlet\\Code\\": "src/"

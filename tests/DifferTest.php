@@ -14,12 +14,23 @@ class DifferTest extends TestCase
         $this->fixturesPath = __DIR__ . '/fixtures/';
     }
 
-    public function testGenDiffMixedFormat(): void
+    public function testGenDiffNestedJson(): void
     {
         $file1 = $this->fixturesPath . 'file1.json';
-        $file2 = $this->fixturesPath . 'file2.yml';
+        $file2 = $this->fixturesPath . 'file2.json';
         
-        $expected = trim(file_get_contents($this->fixturesPath . 'expected_flat.txt'));
+        $expected = trim(file_get_contents($this->fixturesPath . 'expected_nested.txt'));
+        $actual = trim(genDiff($file1, $file2));
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testGenDiffNestedYaml(): void
+    {
+        $file1 = $this->fixturesPath . 'file1.yaml';
+        $file2 = $this->fixturesPath . 'file2.yaml';
+        
+        $expected = trim(file_get_contents($this->fixturesPath . 'expected_nested.txt'));
         $actual = trim(genDiff($file1, $file2));
 
         $this->assertEquals($expected, $actual);
