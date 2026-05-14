@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="w3.org"
-         xsi:noNamespaceSchemaLocation="phpunit.de"
-         bootstrap="vendor/autoload.php"
+<phpunit bootstrap="vendor/autoload.php"
          colors="true"
-         failOnWarning="false">
+         cacheResult="false">
     <testsuites>
         <testsuite name="Application Test Suite">
             <directory>tests</directory>
