@@ -1,0 +1,48 @@
+name: PHP CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Скачиваем код вашего проекта на виртуальную машину GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 2. Устанавливаем PHP нужной версии и расширение xdebug для тестов
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: xdebug
+
+      # 3. Проверяем правильность файла composer.json
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      # 4. Устанавливаем все библиотеки (включая линтер и phpunit)
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      # 5. Запускаем линтер (команда из нашего Makefile)
+      - name: Run linter
+        run: make lint
+
+      # 6. Запускаем тесты и генерируем отчет clover.xml (команда из Makefile)
+      - name: Run tests with coverage
+        run: make test-coverage
+
+      # 7. Отправляем код и отчет о покрытии в SonarQube
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

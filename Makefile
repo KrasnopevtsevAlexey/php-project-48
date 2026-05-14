@@ -11,3 +11,9 @@ validate:
 	composer validate
 
 .PHONY: install gendiff lint validate
+
+test:
+	composer exec --verbose phpunit tests
+
+test-coverage:
+	composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml
