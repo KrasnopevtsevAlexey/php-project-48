@@ -13,14 +13,16 @@ function parse(string $content, string $format): object
         case 'json':
             $data = json_decode($content);
             if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new \Exception("Invalid JSON: " . json_last_error_msg());
+                // Исправлено: RuntimeException вместо \Exception
+                throw new \RuntimeException("Invalid JSON: " . json_last_error_msg());
             }
             return $data;
         case 'yaml':
         case 'yml':
             return Yaml::parse($content, Yaml::PARSE_OBJECT_FOR_MAP);
         default:
-            throw new \Exception("Unsupported format: {$format}");
+            // Исправлено: InvalidArgumentException вместо \Exception
+            throw new \InvalidArgumentException("Unsupported format: {$format}");
     }
 }
 
@@ -30,12 +32,14 @@ function parse(string $content, string $format): object
 function readFileData(string $filepath): array
 {
     if (!file_exists($filepath)) {
-        throw new \Exception("File not found: {$filepath}");
+        // Исправлено: RuntimeException вместо \Exception
+        throw new \RuntimeException("File not found: {$filepath}");
     }
 
     $content = file_get_contents($filepath);
     if ($content === false) {
-        throw new \Exception("Cannot read file: {$filepath}");
+        // Исправлено: RuntimeException вместо \Exception
+        throw new \RuntimeException("Cannot read file: {$filepath}");
     }
 
     $format = pathinfo($filepath, PATHINFO_EXTENSION);

@@ -31,7 +31,6 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $formatName = 
  */
 function makeDiffTree(array $data1, array $data2): array
 {
-    // Используем array_unique для надежного сбора уникальных ключей
     $allKeys = array_unique(array_merge(array_keys($data1), array_keys($data2)));
     $sortedKeys = sortBy($allKeys, fn($key) => $key);
 
@@ -39,45 +38,34 @@ function makeDiffTree(array $data1, array $data2): array
         $exists1 = array_key_exists($key, $data1);
         $exists2 = array_key_exists($key, $data2);
 
-        if ($exists1 && !$exists2) {
-            return [
+        // Определяем состояние ключа через true в match
+        return match (true) {
+            $exists1 && !$exists2 => [
                 'key' => $key,
                 'type' => 'deleted',
                 'value' => $data1[$key]
-            ];
-        }
-        if (!$exists1 && $exists2) {
-            return [
+            ],
+            !$exists1 && $exists2 => [
                 'key' => $key,
                 'type' => 'added',
                 'value' => $data2[$key]
-            ];
-        }
-
-        $val1 = $data1[$key];
-        $val2 = $data2[$key];
-
-        if (is_object($val1) && is_object($val2)) {
-            return [
+            ],
+            is_object($data1[$key]) && is_object($data2[$key]) => [
                 'key' => $key,
                 'type' => 'nested',
-                'children' => makeDiffTree(get_object_vars($val1), get_object_vars($val2))
-            ];
-        }
-
-        if ($val1 === $val2) {
-            return [
+                'children' => makeDiffTree(get_object_vars($data1[$key]), get_object_vars($data2[$key]))
+            ],
+            $data1[$key] === $data2[$key] => [
                 'key' => $key,
                 'type' => 'unchanged',
-                'value' => $val1
-            ];
-        }
-
-        return [
-            'key' => $key,
-            'type' => 'changed',
-            'oldValue' => $val1,
-            'newValue' => $val2
-        ];
+                'value' => $data1[$key]
+            ],
+            default => [
+                'key' => $key,
+                'type' => 'changed',
+                'oldValue' => $data1[$key],
+                'newValue' => $data2[$key]
+            ]
+        };
     }, $sortedKeys);
 }
