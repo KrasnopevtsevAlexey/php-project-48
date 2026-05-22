@@ -25,9 +25,10 @@ DOCOPT;
 
 $result = Docopt::handle($doc, ['version' => '1.0.0']);
 
-$firstFile = $result['<firstFile>'];
-$secondFile = $result['<secondFile>'];
-$format = $result['--format'];
+// Используем strval() для преобразования TValue в string, чтобы анализатор не ругался
+$firstFile = strval($result['<firstFile>']);
+$secondFile = strval($result['<secondFile>']);
+$format = strval($result['--format']);
 
 try {
     echo genDiff($firstFile, $secondFile, $format) . "\n";
