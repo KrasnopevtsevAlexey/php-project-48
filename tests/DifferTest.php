@@ -14,27 +14,39 @@ class DifferTest extends TestCase
         $this->fixturesPath = __DIR__ . '/fixtures/';
     }
 
-    public function testGenDiffNestedJson(): void
+    // 1. Тесты для формата STYLISH (по умолчанию)
+    public function testGenDiffStylish(): void
     {
+        $file1 = "{$this->fixturesPath}file1.json";
+        $file2 = "{$this->fixturesPath}file2.json";
+        $expected = trim(file_get_contents("{$this->fixturesPath}expected_nested.txt"));
         
+        $this->assertEquals($expected, trim(genDiff($file1, $file2, 'stylish')));
+        $this->assertEquals($expected, trim(genDiff($file1, $file2))); // Проверка дефолта
+    }
+
+    // 2. Тесты для формата PLAIN
+    public function testGenDiffPlain(): void
+    {
+        $file1 = "{$this->fixturesPath}file1.json";
+        $file2 = "{$this->fixturesPath}file2.yaml"; // Смешанный тест JSON + YAML
+        $expected = trim(file_get_contents("{$this->fixturesPath}expected_plain.txt"));
+
+        $this->assertEquals($expected, trim(genDiff($file1, $file2, 'plain')));
+    }
+
+    // 3. Тесты для формата JSON
+    public function testGenDiffJson(): void
+    {
         $file1 = "{$this->fixturesPath}file1.json";
         $file2 = "{$this->fixturesPath}file2.json";
         
-        $expected = trim(file_get_contents("{$this->fixturesPath}expected_nested.txt"));
-        $actual = trim(genDiff($file1, $file2));
+        $actual = genDiff($file1, $file2, 'json');
 
-        $this->assertEquals($expected, $actual);
-    }
-
-    public function testGenDiffNestedYaml(): void
-    {
-        
-        $file1 = "{$this->fixturesPath}file1.yaml";
-        $file2 = "{$this->fixturesPath}file2.yaml";
-        
-        $expected = trim(file_get_contents("{$this->fixturesPath}expected_nested.txt"));
-        $actual = trim(genDiff($file1, $file2));
-
-        $this->assertEquals($expected, $actual);
+        // Проверяем, что на выходе валидная JSON-строка
+        $this->assertJson($actual);
+        // Проверяем, что внутри структуры есть ключевые маркеры нашего AST дерева
+        $this->assertStringContainsString('"type": "nested"', $actual);
+        $this->assertStringContainsString('"type": "changed"', $actual);
     }
 }
