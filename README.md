@@ -7,10 +7,11 @@
 
 ### GitHub Actions & SonarCloud Status:
 [![PHP CI](https://github.com)](https://github.com/KrasnopevtsevAlexey/php-project-48/actions)
-[![Quality Gate Status](https://sonarcloud.io)](https://sonarcloud.io)
-[![Maintainability Rating](https://sonarcloud.io)](https://sonarcloud.io)
-[![Coverage](https://sonarcloud.io)](https://sonarcloud.io)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=KrasnopevtsevAlexey_php-project-48&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=KrasnopevtsevAlexey_php-project-48)
 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=KrasnopevtsevAlexey_php-project-48&metric=coverage)](https://sonarcloud.io/summary/new_code?id=KrasnopevtsevAlexey_php-project-48)
+
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=KrasnopevtsevAlexey_php-project-48&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=KrasnopevtsevAlexey_php-project-48)
 ---
 
 ## Описание
