@@ -1,52 +1,83 @@
 <?php
 
-namespace Hexlet\Code\Differ;
+namespace Differ\Differ;
 
-use function Hexlet\Code\Parser\parseFile;
-use function Hexlet\Code\Formatters\format;
+use function Differ\Parser\readFileData;
+use function Differ\Parser\parse;
+use function Differ\Formatters\format;
+use function Funct\Collection\sortBy;
 
-function buildAst(array $data1, array $data2): array
+/**
+ * Главная функция библиотеки (находится первой).
+ */
+function genDiff(string $pathToFile1, string $pathToFile2, string $formatName = 'stylish'): string
 {
-    $allKeys = array_keys(array_merge($data1, $data2));
-    $sortedKeys = \Funct\Collection\sortBy($allKeys, fn($key) => $key);
+    [$content1, $format1] = readFileData($pathToFile1);
+    [$content2, $format2] = readFileData($pathToFile2);
+
+    $obj1 = parse($content1, $format1);
+    $obj2 = parse($content2, $format2);
+
+    $data1 = get_object_vars($obj1);
+    $data2 = get_object_vars($obj2);
+
+    $diffTree = makeDiffTree($data1, $data2);
+
+    return format($diffTree, $formatName);
+}
+
+/**
+ * Строит внутреннее дерево различий.
+ */
+function makeDiffTree(array $data1, array $data2): array
+{
+    // Используем array_unique для надежного сбора уникальных ключей
+    $allKeys = array_unique(array_merge(array_keys($data1), array_keys($data2)));
+    $sortedKeys = sortBy($allKeys, fn($key) => $key);
 
     return array_map(function ($key) use ($data1, $data2) {
         $exists1 = array_key_exists($key, $data1);
         $exists2 = array_key_exists($key, $data2);
 
         if ($exists1 && !$exists2) {
-            return ['key' => $key, 'type' => 'deleted', 'value' => $data1[$key]];
+            return [
+                'key' => $key,
+                'type' => 'deleted',
+                'value' => $data1[$key]
+            ];
         }
         if (!$exists1 && $exists2) {
-            return ['key' => $key, 'type' => 'added', 'value' => $data2[$key]];
+            return [
+                'key' => $key,
+                'type' => 'added',
+                'value' => $data2[$key]
+            ];
         }
-        if (is_array($data1[$key]) && is_array($data2[$key])) {
+
+        $val1 = $data1[$key];
+        $val2 = $data2[$key];
+
+        if (is_object($val1) && is_object($val2)) {
             return [
                 'key' => $key,
                 'type' => 'nested',
-                'children' => buildAst($data1[$key], $data2[$key])
+                'children' => makeDiffTree(get_object_vars($val1), get_object_vars($val2))
             ];
         }
-        if ($data1[$key] === $data2[$key]) {
-            return ['key' => $key, 'type' => 'unchanged', 'value' => $data1[$key]];
+
+        if ($val1 === $val2) {
+            return [
+                'key' => $key,
+                'type' => 'unchanged',
+                'value' => $val1
+            ];
         }
 
         return [
             'key' => $key,
             'type' => 'changed',
-            'oldValue' => $data1[$key],
-            'newValue' => $data2[$key]
+            'oldValue' => $val1,
+            'newValue' => $val2
         ];
     }, $sortedKeys);
-}
-
-function genDiff(string $pathToFile1, string $pathToFile2, string $format = 'stylish'): string
-{
-    $data1 = json_decode(json_encode(parseFile($pathToFile1)), true);
-    $data2 = json_decode(json_encode(parseFile($pathToFile2)), true);
-
-    $ast = buildAst($data1, $data2);
-
-    // Используем центральную фабрику форматеров
-    return format($ast, $format);
 }

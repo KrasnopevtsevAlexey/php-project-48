@@ -5,7 +5,9 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/KrasnopevtsevAlexey/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/KrasnopevtsevAlexey/php-project-48/actions)
 
-
+### GitHub Actions & SonarCloud Status:
+[![PHP CI](https://github.com)](https://github.com/KrasnopevtsevAlexey/php-project-48/actions)
+[![Quality Gate Status](https://sonarcloud.io)](https://sonarcloud.io)
 [![Maintainability Rating](https://sonarcloud.io)](https://sonarcloud.io)
 [![Coverage](https://sonarcloud.io)](https://sonarcloud.io)
 
@@ -66,6 +68,7 @@ composer install
 ### Примеры сравнения файлов во всех доступных форматах:
 
 [![asciicast](https://asciinema.org)](https://asciinema.org/a/1054454)
+
 ---
 
 ## Разработка и тестирование

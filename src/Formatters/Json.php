@@ -1,10 +1,8 @@
 <?php
 
-namespace Hexlet\Code\Formatters\Json;
+namespace Differ\Formatters\Json;
 
-function render(array $ast): string
+function render(array $diffTree): string
 {
-    // JSON_PRETTY_PRINT делает вывод читаемым для человека (с отступами)
-    // JSON_UNESCAPED_UNICODE сохраняет кириллицу и спецсимволы без экранирования
-    return (string) json_encode($ast, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    return json_encode($diffTree, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
 }

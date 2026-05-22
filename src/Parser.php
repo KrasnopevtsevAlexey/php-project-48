@@ -1,10 +1,13 @@
 <?php
 
-namespace Hexlet\Code\Parser;
+namespace Differ\Parser;
 
 use Symfony\Component\Yaml\Yaml;
 
-function parse(string $content, string $format): \stdClass
+/**
+ * Парсит контент в объект в зависимости от формата.
+ */
+function parse(string $content, string $format): object
 {
     switch (strtolower($format)) {
         case 'json':
@@ -13,29 +16,29 @@ function parse(string $content, string $format): \stdClass
                 throw new \Exception("Invalid JSON: " . json_last_error_msg());
             }
             return $data;
-
         case 'yaml':
         case 'yml':
             return Yaml::parse($content, Yaml::PARSE_OBJECT_FOR_MAP);
-
         default:
             throw new \Exception("Unsupported format: {$format}");
     }
 }
 
-function parseFile(string $filepath): \stdClass
+/**
+ * Читает файл по пути, возвращая контент и его формат.
+ */
+function readFileData(string $filepath): array
 {
     if (!file_exists($filepath)) {
         throw new \Exception("File not found: {$filepath}");
     }
 
     $content = file_get_contents($filepath);
-
-
-
     if ($content === false) {
         throw new \Exception("Cannot read file: {$filepath}");
     }
+
     $format = pathinfo($filepath, PATHINFO_EXTENSION);
-    return parse($content, $format);
+
+    return [$content, $format];
 }
