@@ -7,7 +7,6 @@ use function Differ\Parser\parse;
 use function Differ\Formatters\format;
 use function Funct\Collection\sortBy;
 
-
 function genDiff(string $pathToFile1, string $pathToFile2, string $formatName = 'stylish'): string
 {
     [$content1, $format1] = readFileData($pathToFile1);
@@ -16,7 +15,7 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $formatName = 
     $obj1 = parse($content1, $format1);
     $obj2 = parse($content2, $format2);
 
-   
+
     $diffTree = makeDiffTree($obj1, $obj2);
 
     return format($diffTree, $formatName);
@@ -24,7 +23,7 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $formatName = 
 
 function makeDiffTree(object $obj1, object $obj2): array
 {
-    
+
     $data1 = get_object_vars($obj1);
     $data2 = get_object_vars($obj2);
 
