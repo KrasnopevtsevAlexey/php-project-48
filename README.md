@@ -5,7 +5,8 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/KrasnopevtsevAlexey/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/KrasnopevtsevAlexey/php-project-48/actions)
 
-### GitHub Actions & SonarCloud Status: ![PHP CI](https://github.com) [![Quality Gate Status](https://sonarcloud.io)](https://sonarcloud.io) [![Coverage](https://sonarcloud.io)](https://sonarcloud.io) [![Maintainability Rating](https://sonarcloud.io)](https://sonarcloud.io)
+### GitHub Actions & SonarCloud Status:
+![PHP CI](https://github.com) ![Quality Gate Status](https://sonarcloud.io) ![Coverage](https://sonarcloud.io) ![Maintainability Rating](https://sonarcloud.io)
 
 
 ## Описание
