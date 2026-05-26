@@ -5,8 +5,9 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/KrasnopevtsevAlexey/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/KrasnopevtsevAlexey/php-project-48/actions)
 
-### GitHub Actions & SonarCloud Status: [![PHP CI](https://github.com)](https://github.com/KrasnopevtsevAlexey/php-project-48/actions) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=KrasnopevtsevAlexey_php-project-48&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=KrasnopevtsevAlexey_php-project-48) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=KrasnopevtsevAlexey_php-project-48&metric=coverage)](https://sonarcloud.io/summary/new_code?id=KrasnopevtsevAlexey_php-project-48) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=KrasnopevtsevAlexey_php-project-48&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=KrasnopevtsevAlexey_php-project-48)
-
+### GitHub Actions & SonarCloud Status:
+[![PHP CI](https://github.com)](https://github.com/KrasnopevtsevAlexey/php-project-48/actions)[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=KrasnopevtsevAlexey_php-project-48&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=KrasnopevtsevAlexey_php-project-48)[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=KrasnopevtsevAlexey_php-project-48&metric=coverage)](https://sonarcloud.io/summary/new_code?id=KrasnopevtsevAlexey_php-project-48)[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=KrasnopevtsevAlexey_php-project-48&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=KrasnopevtsevAlexey_php-project-48)
+---
 
 ## Описание
 **Gendiff** — это консольная утилита, предназначенная для сравнения двух конфигурационных файлов и вывода разницы между ними. Программа полностью написана в функциональном иммутабельном стиле без использования изменяемых циклов и мутаций данных.
