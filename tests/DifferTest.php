@@ -43,9 +43,9 @@ class DifferTest extends TestCase
         
         $actual = genDiff($file1, $file2, 'json');
 
-        // Проверяем, что на выходе валидная JSON-строка
+        
         $this->assertJson($actual);
-        // Проверяем, что внутри структуры есть ключевые маркеры нашего AST дерева
+       
         $this->assertStringContainsString('"type": "nested"', $actual);
         $this->assertStringContainsString('"type": "changed"', $actual);
     }

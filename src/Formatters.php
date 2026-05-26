@@ -12,7 +12,7 @@ function format(array $diffTree, string $formatName): string
         'stylish' => renderStylish($diffTree),
         'plain' => renderPlain($diffTree),
         'json' => renderJson($diffTree),
-        // Исправлено: InvalidArgumentException вместо \Exception
+
         default => throw new \InvalidArgumentException("Unknown format: '{$formatName}'")
     };
 }

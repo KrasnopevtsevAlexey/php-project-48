@@ -7,9 +7,7 @@ use function Differ\Parser\parse;
 use function Differ\Formatters\format;
 use function Funct\Collection\sortBy;
 
-/**
- * Главная функция библиотеки (находится первой).
- */
+
 function genDiff(string $pathToFile1, string $pathToFile2, string $formatName = 'stylish'): string
 {
     [$content1, $format1] = readFileData($pathToFile1);
@@ -18,19 +16,18 @@ function genDiff(string $pathToFile1, string $pathToFile2, string $formatName = 
     $obj1 = parse($content1, $format1);
     $obj2 = parse($content2, $format2);
 
-    $data1 = get_object_vars($obj1);
-    $data2 = get_object_vars($obj2);
-
-    $diffTree = makeDiffTree($data1, $data2);
+   
+    $diffTree = makeDiffTree($obj1, $obj2);
 
     return format($diffTree, $formatName);
 }
 
-/**
- * Строит внутреннее дерево различий.
- */
-function makeDiffTree(array $data1, array $data2): array
+function makeDiffTree(object $obj1, object $obj2): array
 {
+    
+    $data1 = get_object_vars($obj1);
+    $data2 = get_object_vars($obj2);
+
     $allKeys = array_unique(array_merge(array_keys($data1), array_keys($data2)));
     $sortedKeys = sortBy($allKeys, fn($key) => $key);
 
@@ -38,7 +35,6 @@ function makeDiffTree(array $data1, array $data2): array
         $exists1 = array_key_exists($key, $data1);
         $exists2 = array_key_exists($key, $data2);
 
-        // Определяем состояние ключа через true в match
         return match (true) {
             $exists1 && !$exists2 => [
                 'key' => $key,
@@ -53,7 +49,8 @@ function makeDiffTree(array $data1, array $data2): array
             is_object($data1[$key]) && is_object($data2[$key]) => [
                 'key' => $key,
                 'type' => 'nested',
-                'children' => makeDiffTree(get_object_vars($data1[$key]), get_object_vars($data2[$key]))
+                // Рекурсивно передаем вложенные объекты как есть
+                'children' => makeDiffTree($data1[$key], $data2[$key])
             ],
             $data1[$key] === $data2[$key] => [
                 'key' => $key,
