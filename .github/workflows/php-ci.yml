@@ -11,47 +11,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Скачиваем код вашего проекта на виртуальную машину GitHub
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 2. Устанавливаем PHP 8.3 и необходимые расширения (xdebug)
-      - name: Setup PHP 8.3
+      - name: Setup PHP 8.3 with Xdebug
         run: |
           sudo apt-get update
           sudo apt-get install -y php8.3 php8.3-cli php8.3-xdebug php8.3-mbstring php8.3-xml php8.3-curl php8.3-zip unzip curl
+          sudo bash -c "echo 'zend_extension=xdebug.so' > /etc/php/8.3/cli/conf.d/20-xdebug.ini"
+          sudo bash -c "echo 'xdebug.mode=coverage' >> /etc/php/8.3/cli/conf.d/20-xdebug.ini"
           php -v
-          php -m | grep xdebug || echo "Xdebug not found, installing..."
-          sudo apt-get install -y php8.3-xdebug || sudo apt-get install -y php-xdebug
+          php -m | grep xdebug
       
-      # 3. Устанавливаем Composer
       - name: Install Composer
         run: |
           curl -sS https://getcomposer.org/installer | php
           sudo mv composer.phar /usr/local/bin/composer
           composer --version
 
-      # 4. Проверяем правильность файла composer.json
       - name: Validate composer.json
         run: composer validate --strict
 
-      # 5. Устанавливаем все библиотеки
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-      # 6. Запускаем линтер
+      - name: Run linter
+        run: make lint
+
       - name: Run tests with coverage
         run: make test-coverage
         env:
-         XDEBUG_MODE: coverage
+          XDEBUG_MODE: coverage
 
-      # 7. Запускаем тесты и генерируем отчет clover.xml
-      - name: Run tests with coverage
-        run: make test-coverage
-
-      # 8. Отправляем код и отчет о покрытии в SonarQube
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v2
         env:
