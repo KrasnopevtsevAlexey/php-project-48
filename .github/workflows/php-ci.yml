@@ -42,8 +42,10 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       # 6. Запускаем линтер
-      - name: Run linter
-        run: make lint
+      - name: Run tests with coverage
+        run: make test-coverage
+        env:
+         XDEBUG_MODE: coverage
 
       # 7. Запускаем тесты и генерируем отчет clover.xml
       - name: Run tests with coverage
