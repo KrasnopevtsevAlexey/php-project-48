@@ -19,7 +19,7 @@ jobs:
 
       # 2. Устанавливаем PHP нужной версии и расширение xdebug для тестов
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@v2.32.0
         with:
           php-version: '8.3'
           coverage: xdebug
