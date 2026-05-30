@@ -17,35 +17,43 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 2. Устанавливаем PHP нужной версии и расширение xdebug для тестов
-      - name: Setup PHP
-        uses: shivammathur/setup-php@0c97c6aaecf633cba2dec9c14f2d98bf043b5561
-        with:
-          php-version: '8.3'
-          coverage: xdebug
+      # 2. Устанавливаем PHP 8.3 и необходимые расширения (xdebug)
+      - name: Setup PHP 8.3
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y php8.3 php8.3-cli php8.3-xdebug php8.3-mbstring php8.3-xml php8.3-curl php8.3-zip unzip curl
+          php -v
+          php -m | grep xdebug || echo "Xdebug not found, installing..."
+          sudo apt-get install -y php8.3-xdebug || sudo apt-get install -y php-xdebug
+      
+      # 3. Устанавливаем Composer
+      - name: Install Composer
+        run: |
+          curl -sS https://getcomposer.org/installer | php
+          sudo mv composer.phar /usr/local/bin/composer
+          composer --version
 
-      # 3. Проверяем правильность файла composer.json
+      # 4. Проверяем правильность файла composer.json
       - name: Validate composer.json
         run: composer validate --strict
 
-      # 4. Устанавливаем все библиотеки (включая линтер и phpunit)
+      # 5. Устанавливаем все библиотеки
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-      # 5. Запускаем линтер (команда из нашего Makefile)
+      # 6. Запускаем линтер
       - name: Run linter
         run: make lint
 
-      # 6. Запускаем тесты и генерируем отчет clover.xml (команда из Makefile)
+      # 7. Запускаем тесты и генерируем отчет clover.xml
       - name: Run tests with coverage
         run: make test-coverage
 
-      # 7. Отправляем код и отчет о покрытии в SonarQube
+      # 8. Отправляем код и отчет о покрытии в SonarQube
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          
           args: >
             -Dsonar.host.url=https://sonarcloud.io
